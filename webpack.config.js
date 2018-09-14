@@ -25,6 +25,7 @@ files.map((item, index) => {
 })
 module.exports = {
     // [path.resolve(ROOT_PATH, 'src/main.js'), path.resolve(ROOT_PATH, 'src/main1.js')]
+    devtool: 'eval-source-map',
     entry: mainPath,
     output: {
         path:path.resolve(__dirname,'dist'),
@@ -45,57 +46,16 @@ module.exports = {
                 loader: 'babel-loader',
                 include: [resolve('src')]
             },
-            // {
-            //     test: /\.css$/,
-            //     // loader: 'style-loader!css-loader'
-            //     // use:ExtractTextWebpackPlugin.extract({
-            //     //     fallback:'style-loader',
-            //     //     use:['css-loader']
-            //     // })
-            //     use: ExtractTextWebpackPlugin.extract({
-            //         fallback: "style-loader",
-            //         use: "css-loader"
-            //     })
-            // },
-            { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             {
-                test: /\.scss$/,
-                use: [
-                { loader: 'style-loader' },
-                {
-                    loader: 'css-loader',
-                    // options: {
-                    //     sourceMap: true, modules: true,
-                    //     localIdentName: '[local]_[hash:base64:5]'
-                    // }
-                },
-                {
-                    loader: 'postcss-loader',
-                    options: {
-                    sourceMap: true,
-                    config: {
-                        path: 'postcss.config.js'  // 这个得在项目根目录创建此文件
-                    }
-                    }
-                },
-                {
-                    loader: 'sass-loader', options: { sourceMap: true }
-                }
-                ]
+                test: /\.(scss|sass|css)$/,
+                loader: ExtractTextWebpackPlugin.extract({fallback: "style-loader", use: "css-loader!postcss-loader!sass-loader"})
+                // use: ExtractTextWebpackPlugin.extract({
+                //     fallback: "style-loader",
+                //     use:['css-loader','sass-loader']
+                // })
             }
-            // {
-            //     test: /\.(scss|sass|css)$/,
-            //     loader: ExtractTextWebpackPlugin.extract({fallback: "style-loader", use: "css-loader!postcss-loader!sass-loader"})
-            //     // use: ExtractTextWebpackPlugin.extract({
-            //     //     fallback: "style-loader",
-            //     //     use:['css-loader','sass-loader']
-            //     // })
-            // }
         ]
     },
-    // postcss: [
-    //     require('autoprefixer') //调用autoprefixer插件,加入各个浏览器的前缀
-    // ],
     plugins: [
         new webpack.HotModuleReplacementPlugin(), //热加载插件
         new ExtractTextWebpackPlugin('./css/[name].css') // css分离插件
