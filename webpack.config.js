@@ -14,11 +14,11 @@ console.log(123)
 //     }
 //     console.log(files)
 // })
-let files = fs.readdirSync(path.resolve(__dirname,'src/assets/css'))
+let files = fs.readdirSync(path.resolve(__dirname,'src'))
 let mainPath = {}
 files.map((item, index) => {
-    var curPath = path.resolve(__dirname,'src/assets/css', item)
-    var objName = item.replace('.scss','')
+    var curPath = path.resolve(__dirname,'src', item)
+    var objName = item.replace('.js','')
     if(!fs.statSync(curPath).isDirectory()) {
         Object.assign(mainPath, {[objName]: curPath})
     }
@@ -30,7 +30,7 @@ module.exports = {
     output: {
         path:path.resolve(__dirname,'dist'),
         // filename: 'bundle.js'
-        filename: './css/[name].css',
+        filename: './js/[name].js',
     },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
@@ -58,6 +58,11 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(), //热加载插件
-        new ExtractTextWebpackPlugin('./css/[name].css') // css分离插件
+        new ExtractTextWebpackPlugin('./css/[name].css'), // css分离插件
+        new webpack.DefinePlugin({
+            __DEV_ENV__: JSON.stringify('production'),
+            PG_ENV: JSON.stringify(process.env.PGENV)
+        })
     ],
 }
+console.log(process.argv)

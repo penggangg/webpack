@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "start": "webpack --progress --config webpack.config.js",
-    "server": "webpack-dev-server --inline --progress"
+    "server:test1": "cross-env PGENV=pgtest1 webpack-dev-server --inline --progress",
+    "server:test2": "cross-env PGENV=pgtest2 webpack-dev-server --inline --progress"
   },
   "author": "",
   "license": "ISC",
@@ -24,5 +25,8 @@
     "style-loader": "^0.23.0",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0"
   }
 }

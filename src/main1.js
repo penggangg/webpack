@@ -3,5 +3,5 @@ const msg = ()=>{
     return aa
 }
 import './assets/js/demo1'
-import './assets/css/index1.scss'
+import './assets/css/demo1.scss'
 document.getElementById('root').innerHTML = msg()
